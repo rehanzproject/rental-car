@@ -1,0 +1,48 @@
+<form method="POST" action="{{ route('typemobil.create') }}" enctype="multipart/form-data">
+    @csrf
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Type Mobil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    {{-- Type Mobil --}}
+                    <div class="form-group">
+                        <label for="type_mobil">Type Mobil</label>
+                        <input type="text" class="form-control @error('type_mobil') is-invalid @enderror" id="type_mobil" name="type_mobil" value="{{ old('type_mobil') }}" required>
+                        @error('type_mobil')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Bensin --}}
+                    <div class="form-group">
+                        <label for="bensin">Bahan Bakar</label>
+                        <input type="text" class="form-control @error('bensin') is-invalid @enderror" id="bensin" name="bensin" value="{{ old('bensin') }}" required>
+                        @error('bensin')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Jumlah --}}
+                    <div class="form-group">
+                        <label for="jumlah">Jumlah</label>
+                        <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah" name="jumlah" value="{{ old('jumlah') }}" required>
+                        @error('jumlah')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-dark">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,20 @@
+:root {
+    --primary-color: #ed1c24; /* Warna default diubah menjadi #ED1C24 */
+    --primary-color-rgb: 237, 28, 36;
+
+    --secondary-color: #99221a; /* Warna sekunder lebih gelap dari primary */
+    --secondary-color-rgb: 153, 34, 26;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #3a3a3a;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
