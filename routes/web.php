@@ -92,8 +92,7 @@ Route::prefix('dashboard')->middleware(['auth', 'Admin'])->group(function () {
         Route::get('/sedangBeroperasi', 'sedangBeroperasi')->name('transaksi.sedangBeroperasi');
         Route::get('/selesai', 'selesai')->name('transaksi.selesai');
         Route::get('/batal', 'batal')->name('transaksi.batal');
-        
-        // List //
+                // List //
         Route::get('/semuaTransaksi/list',  'semualist')->name('transaksi.semualist');
         Route::get('/belumBayar/list',  'belumBayarlist')->name('transaksi.belumBayarlist');
         Route::get('/belumSetuju/list',  'belumSetujulist')->name('transaksi.belumSetujulist');
