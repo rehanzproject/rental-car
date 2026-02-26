@@ -1,0 +1,72 @@
+name: Laravel CI/CD Deploy to aaPanel
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to aaPanel Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            cd ${{ secrets.VPS_PATH }}
+            
+            echo "===== Starting Deployment ====="
+            
+            # Set PHP CLI path (adjust version based on your aaPanel setup)
+            PHP_CLI="/www/server/php/83/bin/php"
+            
+            # Enable maintenance mode
+            echo "Enabling maintenance mode..."
+            $PHP_CLI artisan down || true
+            
+            # Pull latest changes from GitHub
+            echo "Pulling latest code from GitHub..."
+            git pull origin master
+            
+            # Install/Update Composer dependencies
+            echo "Installing Composer dependencies..."
+            $PHP_CLI /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction
+            
+            # Run database migrations
+            echo "Running database migrations..."
+            $PHP_CLI artisan migrate --force
+            
+            # Clear all caches
+            echo "Clearing caches..."
+            $PHP_CLI artisan config:clear
+            $PHP_CLI artisan route:clear
+            $PHP_CLI artisan view:clear
+            $PHP_CLI artisan cache:clear
+            
+            # Optimize Laravel
+            echo "Optimizing Laravel..."
+            $PHP_CLI artisan config:cache
+            $PHP_CLI artisan route:cache
+            $PHP_CLI artisan view:cache
+            
+            # Create storage link if needed
+            $PHP_CLI artisan storage:link || true
+            
+            # Set proper permissions
+            echo "Setting permissions..."
+            chmod -R 755 storage bootstrap/cache
+            chown -R www:www storage bootstrap/cache
+            
+            # Disable maintenance mode
+            echo "Disabling maintenance mode..."
+            $PHP_CLI artisan up
+            
+            echo "===== Deployment completed successfully! ====="
