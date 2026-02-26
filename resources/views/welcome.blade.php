@@ -14,7 +14,7 @@
                     <div class="spacer-double"></div>
                     <div class="col-lg-5 text-light">
                         <h2 class="mb-2 fs-1 text-bold">Mencari <span class="id-color">kendaraan</span>? Anda berada di
-                            tempat yang tepat.</h2>
+                            tempat yang tepat test CI/CD.</h2>
                         <div class="spacer-single"></div>
                     </div>
                 </div>
